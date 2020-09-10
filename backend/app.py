@@ -59,5 +59,15 @@ def register():
     except:
         abort(400)
 
+# Authentication helper function - compares password parameter
+#   to password stored for user with given ID
+def authenticate(password, userID):
+    # TODO: query DB for hashed password associated with UserID
+    stored_pw = None # Replace with DB value
+    if bcrypt.checkpw(password, stored_pw):
+        return True
+    else:
+        return False
+
 if __name__ == "__main__":
     app.run(debug=True)
