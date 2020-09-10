@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
+import bcrypt
 
 app = Flask(__name__)
 
@@ -38,6 +39,25 @@ def edit(id):
         "route": "/edit/<id>",
         "http-method": "PUT"
     })
+
+# Register route - registers a new user based on the provided
+#   authentication information
+@app.route("/diarist/register", methods=['POST'])
+def register():
+    # TODO: Database model integration
+    request_data = request.get_json()
+    try:
+        password = request_data['password'].encode()
+        salt = bcrypt.gensalt()
+        hashed_pw = bcrypt.hashpw(password, salt)
+        return jsonify({
+           "route": "/register/",
+           "http-method": "POST",
+           "password-hash": hashed_pw.decode(),
+           "data-received": request_data
+        }) 
+    except:
+        abort(400)
 
 if __name__ == "__main__":
     app.run(debug=True)
