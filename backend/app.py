@@ -73,13 +73,18 @@ def home():
         return request.get_json()
 
 # Delete route - deletes journal entry by ID
-@app.route("/diarist/delete/<int:id>", methods=['DELETE'])
-def delete(id):
-    # TODO: authenticate, remove journal entry with provided ID
-    return jsonify({
-        "route": "/delete/<id>",
-        "http-method": "DELETE"
-    })
+@app.route("/diarist/delete/<int:entry_id>", methods=['DELETE'])
+def delete(entry_id):
+    request_data = request.get_json()
+    if not authenticate_token(request_data['token']):
+        abort(401)
+    else:
+        entry = JournalEntry.query.get_or_404(entry_id)
+        if get_email_from_token(request_data['token']) != entry.author:
+            abort(401)
+        db.session.delete(entry)
+        db.session.commit()
+        return request_data
 
 # Edit route - updates a journal entry associated with ID
 @app.route("/diarist/edit/<int:entry_id>", methods=['PUT'])
@@ -180,9 +185,10 @@ def authenticate_token(token, user=None):
         user = User.query.filter_by(token=token).first()
         if not user:
             return False
+    if user.token != token:
+        return False
     email = get_email_from_token(token)
     if user.email != email:
-        print(user.email, email)
         return False
     timestamp = get_timestamp_from_token(token)
     if datetime.now() >= datetime.fromtimestamp(timestamp) + \
