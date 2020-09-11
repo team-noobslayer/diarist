@@ -15,16 +15,17 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
+    username = db.Column(db.String(32), nullable=False)
+    email = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    token = db.Column(db.BLOB, nullable=False)
 
 class JournalEntry(db.Model):
     entry_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255))
+    title = db.Column(db.String(256))
     body = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
-    last_edited = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    last_edited = db.Column(db.DateTime, default=datetime.now(), nullable=False)
 
 # Uncomment the next line to create the required tables in a new database on program execution
 # db.create_all()
@@ -75,7 +76,7 @@ def register():
         pwd = request_data['password'].encode()
         salt = bcrypt.gensalt()
         hashed_pw = bcrypt.hashpw(pwd, salt)
-        user = User(username=request_data['username'], email=request_data['email'], password=hashed_pw)
+        user = User(username=request_data['username'], email=request_data['email'], password=hashed_pw, token=b'placeholder')
         db.session.add(user)
         db.session.commit()
         return jsonify({
