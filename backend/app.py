@@ -8,16 +8,20 @@ import bcrypt
 import os
 load_dotenv()
 
-token_timeout = 24 # timeout period, in hours, for authentication tokens
+token_timeout = 24  # timeout period, in hours, for authentication tokens
 
 token_crypto_secret = os.environ.get('SECRET').encode()
 crypto = Fernet(token_crypto_secret)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Optional, silences deprecation warning
+
+# Optional, silences deprecation warning
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
 
 db = SQLAlchemy(app)
+
 
 class User(db.Model):
     email = db.Column(db.String(128), nullable=False, primary_key=True)
@@ -25,12 +29,14 @@ class User(db.Model):
     password = db.Column(db.String(128), nullable=False)
     token = db.Column(db.String(256), nullable=False)
 
+
 class JournalEntry(db.Model):
     entry_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256))
     body = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
-    last_edited = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    last_edited = db.Column(
+        db.DateTime, default=datetime.now(), nullable=False)
     author = db.Column(db.String(128), db.ForeignKey('user.email'))
     user = db.relationship("User", backref="request")
 
@@ -47,7 +53,8 @@ def home():
         abort(401)
     if request.method == 'GET':
         email = get_email_from_token(request_data['token'])
-        journal_entry_objects = JournalEntry.query.filter_by(author=email).all()
+        journal_entry_objects = JournalEntry.query.filter_by(
+            author=email).all()
         journal_entries = []
         for entry in journal_entry_objects:
             journal_entries.append({
@@ -117,9 +124,9 @@ def register():
 
         # generate user and write to database
         user = User(
-            username=request_data['username'], 
-            email=request_data['email'], 
-            password=hashed_pw.decode(), 
+            username=request_data['username'],
+            email=request_data['email'],
+            password=hashed_pw.decode(),
             token=token
         )
         db.session.add(user)
@@ -128,7 +135,7 @@ def register():
         return jsonify({
             "status": "success",
             "token": token
-        }) 
+        })
     except:
         abort(400)
 
@@ -137,7 +144,8 @@ def register():
 def login():
     request_data = request.get_json()
     try:
-        token = authenticate_email_password(request_data['email'], request_data['password'])
+        token = authenticate_email_password(
+            request_data['email'], request_data['password'])
         if token:
             return jsonify({
                 "status": "success",
@@ -148,17 +156,21 @@ def login():
     except:
         abort(400)
 
+
 def generate_token(email):
     plaintext = (email + str(floor(datetime.now().timestamp()))).encode()
     return crypto.encrypt(plaintext).decode()
+
 
 def get_email_from_token(token):
     plaintext = crypto.decrypt(token.encode()).decode()
     return plaintext[0:len(plaintext)-10]
 
+
 def get_timestamp_from_token(token):
     plaintext = crypto.decrypt(token.encode()).decode()
     return int(plaintext[-10::])
+
 
 # Validates supplied email and password and return auth token. If email and password are
 # correct and token is expired, issue a new token and return.
@@ -179,6 +191,7 @@ def authenticate_email_password(email, password):
     else:
         return None
 
+
 # Validates authentication token. Returns boolean representing token validity.
 def authenticate_token(token, user=None):
     if not user:
@@ -192,9 +205,10 @@ def authenticate_token(token, user=None):
         return False
     timestamp = get_timestamp_from_token(token)
     if datetime.now() >= datetime.fromtimestamp(timestamp) + \
-        timedelta(hours=token_timeout):
+            timedelta(hours=token_timeout):
         return False
     return True
+
 
 if __name__ == "__main__":
     app.run()
