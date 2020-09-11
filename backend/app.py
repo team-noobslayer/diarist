@@ -197,4 +197,4 @@ def authenticate_token(token, user=None):
     return True
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
