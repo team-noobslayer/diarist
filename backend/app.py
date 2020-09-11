@@ -1,11 +1,16 @@
 from datetime import datetime
+from math import floor
 from dotenv import load_dotenv
+from cryptography.fernet import Fernet
 from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 import os
 
 load_dotenv()
+
+token_crypto_secret = os.environ.get('SECRET').encode()
+crypto = Fernet(token_crypto_secret)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Optional, silences deprecation warning
@@ -73,24 +78,36 @@ def edit(id):
 def register():
     request_data = request.get_json()
     try:
+        # encrypt token
+        plaintext_token = \
+            (request_data['email'] + str(floor(datetime.now().timestamp()))).encode()
+        encrypted_token = crypto.encrypt(plaintext_token)
+
+        # hash password
         pwd = request_data['password'].encode()
         salt = bcrypt.gensalt()
         hashed_pw = bcrypt.hashpw(pwd, salt)
-        user = User(username=request_data['username'], email=request_data['email'], password=hashed_pw, token=b'placeholder')
+        user = User(
+            username=request_data['username'], 
+            email=request_data['email'], 
+            password=hashed_pw, 
+            token=encrypted_token
+        )
         db.session.add(user)
         db.session.commit()
         return jsonify({
-            "status": "success"
+            "status": "success",
+            "token": encrypted_token.decode()
         }) 
     except:
         abort(400)
 
 # Authentication helper function - compares password parameter
 #   to password stored for user with given ID
-def authenticate(pwd, userID):
+def authenticate(token=None, password=None, userID=None):
     # TODO: query DB for hashed password associated with UserID
     stored_pw = None # Replace with DB value
-    if bcrypt.checkpw(pwd, stored_pw):
+    if bcrypt.checkpw(password, stored_pw):
         return True
     else:
         return False
