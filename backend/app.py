@@ -102,10 +102,20 @@ def register():
         }) 
     except:
         abort(400)
-        return jsonify({
-            "status": "success",
-            "token": encrypted_token.decode()
-        }) 
+
+# Login route - authenticates user based on supplied username and password; returns auth token
+@app.route("/diarist/login", methods=['POST'], strict_slashes=False)
+def login():
+    request_data = request.get_json()
+    try:
+        token = authenticate_email_password(request_data['email'], request_data['password'])
+        if token:
+            return jsonify({
+                "status": "success",
+                "token": token.decode()
+            })
+        else:
+            abort(401)
     except:
         abort(400)
 
