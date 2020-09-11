@@ -42,18 +42,35 @@ class JournalEntry(db.Model):
 #   POST takes a new journal entry and adds it to database
 @app.route("/diarist", methods=['GET', 'POST'], strict_slashes=False)
 def home():
+    request_data = request.get_json()
+    if not authenticate_token(request_data['token']):
+        abort(401)
     if request.method == 'GET':
-        # TODO: authenticate, return list of all journal entries
-        return jsonify({
-            "route": "/",
-            "http-method": "GET"
-        })
+        email = get_email_from_token(request_data['token'])
+        journal_entry_objects = JournalEntry.query.filter_by(author=email).all()
+        journal_entries = []
+        for entry in journal_entry_objects:
+            journal_entries.append({
+                'id': entry.entry_id,
+                'title': entry.title,
+                'body': entry.body,
+                'created_at': entry.created_at,
+                'last_edited': entry.last_edited,
+                'author': entry.author
+            })
+        return jsonify(
+            journal_entries
+        )
     elif request.method == 'POST':
-        # TODO: authenticate, verify request body, and add
-        # journal entry to database
+        email = get_email_from_token(request_data['token'])
+        entry = JournalEntry(
+            title=request_data['title'],
+            body=request_data['body'],
+            author=email
+        )
+        db.session.add(entry)
+        db.session.commit()
         return request.get_json()
-    # else http method is not in methods parameter
-    # flasks handles this automatically
 
 # Delete route - deletes journal entry by ID
 @app.route("/diarist/delete/<int:id>", methods=['DELETE'])
@@ -166,11 +183,6 @@ def authenticate_token(token, user=None):
         timedelta(hours=token_timeout):
         return False
     return True
-
-# Generate a new authentication token based on current timestamp
-def generate_token(email):
-    plaintext = (email + str(floor(datetime.now().timestamp()))).encode()
-    return crypto.encrypt(plaintext).decode()
 
 if __name__ == "__main__":
     app.run(debug=True)
