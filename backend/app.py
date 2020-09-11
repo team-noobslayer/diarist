@@ -67,17 +67,16 @@ def edit(id):
 #   authentication information
 @app.route("/diarist/register", methods=['POST'], strict_slashes=False)
 def register():
-    # TODO: Database model integration
     request_data = request.get_json()
     try:
         pwd = request_data['password'].encode()
         salt = bcrypt.gensalt()
         hashed_pw = bcrypt.hashpw(pwd, salt)
+        user = User(username=request_data['username'], email=request_data['email'], password=hashed_pw)
+        db.session.add(user)
+        db.session.commit()
         return jsonify({
-           "route": "/register/",
-           "http-method": "POST",
-           "password-hash": hashed_pw.decode(),
-           "data-received": request_data
+            "status": "success"
         }) 
     except:
         abort(400)
