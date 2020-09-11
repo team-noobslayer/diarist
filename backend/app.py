@@ -73,29 +73,35 @@ def edit(id):
         "http-method": "PUT"
     })
 
-# Register route - registers a new user based on the provided
-#   authentication information
+# Register route - registers a new user; returns auth token
 @app.route("/diarist/register", methods=['POST'], strict_slashes=False)
 def register():
     request_data = request.get_json()
     try:
-        # encrypt token
-        plaintext_token = \
-            (request_data['email'] + str(floor(datetime.now().timestamp()))).encode()
-        encrypted_token = crypto.encrypt(plaintext_token)
-
         # hash password
         pwd = request_data['password'].encode()
         salt = bcrypt.gensalt()
         hashed_pw = bcrypt.hashpw(pwd, salt)
+
+        # generate auth token
+        token = generate_token(request_data['email'])
+
+        # generate user and write to database
         user = User(
             username=request_data['username'], 
             email=request_data['email'], 
             password=hashed_pw, 
-            token=encrypted_token
+            token=token
         )
         db.session.add(user)
         db.session.commit()
+
+        return jsonify({
+            "status": "success",
+            "token": token.decode()
+        }) 
+    except:
+        abort(400)
         return jsonify({
             "status": "success",
             "token": encrypted_token.decode()
