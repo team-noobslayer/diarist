@@ -23,7 +23,7 @@ class User(db.Model):
     email = db.Column(db.String(128), nullable=False, primary_key=True)
     username = db.Column(db.String(32), nullable=False)
     password = db.Column(db.String(128), nullable=False)
-    token = db.Column(db.BLOB, nullable=False)
+    token = db.Column(db.String(256), nullable=False)
 
 class JournalEntry(db.Model):
     entry_id = db.Column(db.Integer, primary_key=True)
@@ -89,7 +89,7 @@ def register():
         user = User(
             username=request_data['username'], 
             email=request_data['email'], 
-            password=hashed_pw, 
+            password=hashed_pw.decode(), 
             token=token
         )
         db.session.add(user)
@@ -97,7 +97,7 @@ def register():
 
         return jsonify({
             "status": "success",
-            "token": token.decode()
+            "token": token
         }) 
     except:
         abort(400)
@@ -111,7 +111,7 @@ def login():
         if token:
             return jsonify({
                 "status": "success",
-                "token": token.decode()
+                "token": token
             })
         else:
             abort(401)
@@ -125,7 +125,7 @@ def authenticate_email_password(email, password):
     if user:
         stored_pw = user.password
         if bcrypt.checkpw(password.encode(), stored_pw.encode()):
-            if authenticate_token(user.token.decode()):
+            if authenticate_token(user.token, user):
                 return user.token
             else:
                 new_token = generate_token(user.email)
@@ -140,7 +140,7 @@ def authenticate_email_password(email, password):
 # Validates authentication token. Returns boolean representing token validity.
 def authenticate_token(token, user=None):
     if not user:
-        user = User.query.filter_by(token=token.encode()).first()
+        user = User.query.filter_by(token=token).first()
         if not user:
             return False
     plaintext = crypto.decrypt(token.encode())
@@ -156,7 +156,7 @@ def authenticate_token(token, user=None):
 # Generate a new authentication token based on current timestamp
 def generate_token(email):
     plaintext = (email + str(floor(datetime.now().timestamp()))).encode()
-    return crypto.encrypt(plaintext)
+    return crypto.encrypt(plaintext).decode()
 
 if __name__ == "__main__":
     app.run(debug=True)
