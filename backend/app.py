@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from math import floor
 from dotenv import load_dotenv
 from cryptography.fernet import Fernet
@@ -6,8 +6,9 @@ from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 import os
-
 load_dotenv()
+
+token_timeout = 24 # timeout period, in hours, for authentication tokens
 
 token_crypto_secret = os.environ.get('SECRET').encode()
 crypto = Fernet(token_crypto_secret)
@@ -102,15 +103,45 @@ def register():
     except:
         abort(400)
 
-# Authentication helper function - compares password parameter
-#   to password stored for user with given ID
-def authenticate(token=None, password=None, userID=None):
-    # TODO: query DB for hashed password associated with UserID
-    stored_pw = None # Replace with DB value
-    if bcrypt.checkpw(password, stored_pw):
-        return True
+# Validates supplied email and password and return auth token. If email and password are
+# correct and token is expired, issue a new token and return.
+def authenticate_email_password(email, password):
+    user = User.query.filter_by(email=email).first()
+    if user:
+        stored_pw = user.password
+        if bcrypt.checkpw(password.encode(), stored_pw.encode()):
+            if authenticate_token(user.token.decode()):
+                return user.token
+            else:
+                new_token = generate_token(user.email)
+                user.token = new_token
+                db.session.commit()
+                return new_token
+        else:
+            return None
     else:
+        return None
+
+# Validates authentication token. Returns boolean representing token validity.
+def authenticate_token(token, user=None):
+    if not user:
+        user = User.query.filter_by(token=token.encode()).first()
+        if not user:
+            return False
+    plaintext = crypto.decrypt(token.encode())
+    email = plaintext[0:len(plaintext) - 10]
+    if user.email != email:
         return False
+    timestamp = plaintext[-10::]
+    if datetime.now() >= datetime.fromtimestamp(timestamp) + \
+        timedelta(hours=token_timeout):
+        return False
+    return True
+
+# Generate a new authentication token based on current timestamp
+def generate_token(email):
+    plaintext = (email + str(floor(datetime.now().timestamp()))).encode()
+    return crypto.encrypt(plaintext)
 
 if __name__ == "__main__":
     app.run(debug=True)
