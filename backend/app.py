@@ -31,6 +31,8 @@ class JournalEntry(db.Model):
     body = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     last_edited = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    author = db.Column(db.String(128), db.ForeignKey('user.email'))
+    user = db.relationship("User", backref="request")
 
 # Uncomment the next line to create the required tables in a new database on program execution
 # db.create_all()
