@@ -26,6 +26,9 @@ class JournalEntry(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
     last_edited = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
+# Uncomment the next line to create the required tables in a new database on program execution
+# db.create_all()
+
 # Home route
 #   GET returns all journal entries by a user
 #   POST takes a new journal entry and adds it to database
