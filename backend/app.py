@@ -82,14 +82,20 @@ def delete(id):
     })
 
 # Edit route - updates a journal entry associated with ID
-@app.route("/diarist/edit/<int:id>", methods=['PUT'])
-def edit(id):
-    # TODO: authenticate, replace journal entry with provided
-    #   ID with supplied data
-    return jsonify({
-        "route": "/edit/<id>",
-        "http-method": "PUT"
-    })
+@app.route("/diarist/edit/<int:entry_id>", methods=['PUT'])
+def edit(entry_id):
+    request_data = request.get_json()
+    if not authenticate_token(request_data['token']):
+        abort(401)
+    else:
+        entry = JournalEntry.query.get_or_404(entry_id)
+        if get_email_from_token(request_data['token']) != entry.author:
+            abort(401)
+        entry.title = request_data['title']
+        entry.body = request_data['body']
+        entry.last_edited = datetime.now()
+        db.session.commit()
+        return request_data
 
 # Register route - registers a new user; returns auth token
 @app.route("/diarist/register", methods=['POST'], strict_slashes=False)
