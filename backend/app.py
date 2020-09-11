@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Home route
 #   GET returns all journal entries by a user
 #   POST takes a new journal entry and adds it to database
-@app.route("/diarist/", methods=['GET', 'POST'])
+@app.route("/diarist", methods=['GET', 'POST'], strict_slashes=False)
 def home():
     if request.method == 'GET':
         # TODO: authenticate, return list of all journal entries
@@ -42,7 +42,7 @@ def edit(id):
 
 # Register route - registers a new user based on the provided
 #   authentication information
-@app.route("/diarist/register", methods=['POST'])
+@app.route("/diarist/register", methods=['POST'], strict_slashes=False)
 def register():
     # TODO: Database model integration
     request_data = request.get_json()
