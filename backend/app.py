@@ -118,6 +118,18 @@ def login():
     except:
         abort(400)
 
+def generate_token(email):
+    plaintext = (email + str(floor(datetime.now().timestamp()))).encode()
+    return crypto.encrypt(plaintext).decode()
+
+def get_email_from_token(token):
+    plaintext = crypto.decrypt(token.encode()).decode()
+    return plaintext[0:len(plaintext)-10]
+
+def get_timestamp_from_token(token):
+    plaintext = crypto.decrypt(token.encode()).decode()
+    return int(plaintext[-10::])
+
 # Validates supplied email and password and return auth token. If email and password are
 # correct and token is expired, issue a new token and return.
 def authenticate_email_password(email, password):
@@ -143,11 +155,11 @@ def authenticate_token(token, user=None):
         user = User.query.filter_by(token=token).first()
         if not user:
             return False
-    plaintext = crypto.decrypt(token.encode())
-    email = plaintext[0:len(plaintext) - 10]
+    email = get_email_from_token(token)
     if user.email != email:
+        print(user.email, email)
         return False
-    timestamp = plaintext[-10::]
+    timestamp = get_timestamp_from_token(token)
     if datetime.now() >= datetime.fromtimestamp(timestamp) + \
         timedelta(hours=token_timeout):
         return False
