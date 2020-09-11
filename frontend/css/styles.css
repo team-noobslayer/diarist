@@ -1,0 +1,36 @@
+/*CSS for Elements*/
+body{
+    background-color:#FEF2A0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+footer{
+    padding: 4em;
+    font-weight: bold;
+}
+
+
+/*CSS for ID*/
+#app-name{
+    display: inline-block;
+    font-size: 4em;
+    font-family: 'Lobster', cursive;
+    color:black;
+    margin-top: 30%;
+}
+
+#login{
+    margin-top: 1%;
+}
+
+#login-text{
+    padding-top: 45px;
+}
+
+/*CSS for Classes*/
+
+.links{
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 4;
+}
