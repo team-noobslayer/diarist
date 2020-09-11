@@ -22,7 +22,7 @@ db = SQLAlchemy(app)
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), nullable=False)
-    email = db.Column(db.String(128), nullable=False)
+    email = db.Column(db.String(128), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     token = db.Column(db.BLOB, nullable=False)
 
