@@ -6,12 +6,18 @@ from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 import os
+
+# Uncomment the following code block to generate a secret for encryption, to be stored in .env
+#   NOTE: Only do this once! Generating a new secret may render previously encrypted
+#         data unreadable.
+#
+# with open('.env', 'a') as file:
+#     file.write(f'\nSECRET = "{ Fernet.generate_key().decode() }"')
+
 load_dotenv()
-
-token_timeout = 24  # timeout period, in hours, for authentication tokens
-
-token_crypto_secret = os.environ.get('SECRET').encode()
+token_crypto_secret = os.environ.get('SECRET')
 crypto = Fernet(token_crypto_secret)
+token_timeout = 24  # timeout period, in hours, for authentication tokens
 
 app = Flask(__name__)
 
