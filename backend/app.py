@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from cryptography.fernet import Fernet
 from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import bcrypt
 import os
 
@@ -31,9 +32,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
-
 db = SQLAlchemy(app)
 
+CORS(app)
 
 class User(db.Model):
     __tablename__ = 'diarist_user'
