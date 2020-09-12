@@ -1,3 +1,6 @@
+# Backend Architecture
+![Backend Architecture](backend-architecture.jpg)
+
 # Backend endpoints
 
 ### /diarist/login
