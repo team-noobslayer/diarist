@@ -1,36 +1,58 @@
+:root {
+  --success-color: #2ecc71;
+  --error-color: #e74c3c;
+}
+
 /*CSS for Elements*/
-body{
-    background-color:#FEF2A0;
-    font-family: 'Montserrat', sans-serif;
+body {
+  background-color: #c0deed;
+  font-family: 'Montserrat', sans-serif;
 }
 
-footer{
-    padding: 4em;
-    font-weight: bold;
+footer {
+  padding: 4em;
+  font-weight: bold;
 }
-
 
 /*CSS for ID*/
-#app-name{
-    display: inline-block;
-    font-size: 4em;
-    font-family: 'Lobster', cursive;
-    color:black;
-    margin-top: 30%;
+#app-name {
+  display: inline-block;
+  font-size: 4em;
+  font-family: 'Lobster', cursive;
+  color: #00aced;
+  margin-top: 30%;
 }
 
-#login{
-    margin-top: 1%;
+#login {
+  margin-top: 1%;
 }
 
-#login-text{
-    padding-top: 45px;
+#login-text {
+  padding-top: 45px;
 }
 
 /*CSS for Classes*/
 
-.links{
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 4;
+.form-group.success input {
+  border-color: var(--success-color);
+}
+
+.form-group.error input {
+  border-color: var(--error-color);
+}
+
+.form-group small {
+  color: var(--error-color);
+
+  visibility: hidden;
+}
+
+.form-group.error small {
+  visibility: visible;
+}
+
+.links {
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 4;
 }

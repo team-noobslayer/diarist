@@ -12,17 +12,17 @@
     <!-- CSS stylesheets-->
     <link rel="stylesheet" href="css\styles.css">
     
-    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Lobster&family=Montserrat&family=Roboto&display=swap" rel="stylesheet">    <title>login | diarist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Lobster&family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <title>Diarist | Login</title>
   </head>
 
   <body>
-  
+
     <!-- Logo -->
     <header id="logo-header mx-auto">
       <div class="container text-center">
         <div class="row">
           <div class="col-md-6 mx-auto">
-            <img src="images/diarist-dummy-logo.png" style="display:inline-block;">
           <h1 id="app-name">Diarist</h1>
         </div>
       </div>
@@ -36,22 +36,24 @@
             <div class="card">
               <h4 class="card-title text-center" id="login-text">Log in to Diarist</h4>
               <div class="card-body">
-                <form action="index.html">
+                <form id="login-form" action="">
                   <div class="form-group">
                       <label for="inputEmail">Email</label>
-                      <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                      <input type="email" id="inputEmail" class="form-control" placeholder="Email" autofocus>
+                      <small>Error message</small>
                   </div>
                   <div class="form-group">
                       <label for="inputPassword">Password</label>
-                      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                      <input type="password" id="inputPassword" class="form-control" placeholder="Password">
+                      <small>Error message</small>
                   </div>             
                   <div class="text-center">
-                    <input type="submit" value="Log In" class="btn btn-primary">
+                    <input type="submit" value="Log In" class="btn btn-primary" id="login-button">
                   </div>               
                 </form>
                 <div class="row text-center">
                   <a href="" class="links col-lg-6">Forgot account details?</a>
-                  <a href="" class="links col-lg-6" >Sign up for Diarist</a>
+                  <a href="signup.html" class="links col-lg-6" >Sign up for Diarist</a>
                 </div>
               </div>
             </div>
@@ -62,15 +64,15 @@
 
     <!-- Footer -->
     <footer class="text-center">
-      <p>© 2020 Team n00b$layer_ttv</p>
+      <p>&copy 2020</p>
     </footer>
 
     <!-- Optional JavaScript -->
+    <script src="/scripts/login-validation.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   </body>
 </html>
-
 
