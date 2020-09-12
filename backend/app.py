@@ -7,6 +7,12 @@ from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 import os
 
+# Uncomment the following code block to instruct the program to generate a sqlite database. 
+#   Setting will be stored in .env and database will be stored in db.sqlite3
+#
+# with open('.env', 'a') as file:
+#     file.write('\nDATABASE_URL = "sqlite:///db.sqlite3"')
+
 # Uncomment the following code block to generate a secret for encryption, to be stored in .env
 #   NOTE: Only do this once! Generating a new secret may render previously encrypted
 #         data unreadable.
