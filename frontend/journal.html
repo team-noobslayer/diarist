@@ -14,6 +14,20 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Lobster&family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
     <title>Diarist | Your Journal</title>
+    <style>
+        textarea {
+            width: 90%;
+            margin: auto;
+            height: 150px;
+            padding: 15px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,17 +42,43 @@
         </div>
 </header>
 
+<div style="margin-left: 100px">
+    <label for="start">Entry date:</label>
 
-<div class="form-group">
-    <label for="comment">Enter your thoughts:</label>
-    <br>
-    <textarea class="form-control" rows="5" id="comment"></textarea>
+    <input type="date" id="start" name="journal-entry-date"
+           value="2020-09-12"
+           min="2020-01-01" max="2020-12-31">
 </div>
 
+<form>
+    <div style="margin-left: 100px">
+        <h6>Enter your thoughts here...</h6>
+        <textarea></textarea>
+    </div>
+    <br>
+    <div style="margin-left: 100px">
+        <h6>Enter your wins for today...</h6>
+        <textarea></textarea>
+    </div>
+    <br>
+    <div style="margin-left: 100px">
+        <h6>Enter your goals for tomorrow...</h6>
+        <textarea></textarea>
+    </div>
 
+</form>
 
-
-
+<!-- Exercise tracker -->
+<div class="custom-select" style="width: auto; margin-left: 100px">
+    <select>
+        <option value="0">Did you exercise today?</option>
+        <option value="1">Yes</option>
+        <option value="2">No</option>
+    </select>
+</div>
+<div class="text-center">
+    <input type="submit" value="Submit Entry" class="btn btn-primary" id="journal-button">
+</div>
 
 <!-- Footer -->
 <footer class="text-center">
