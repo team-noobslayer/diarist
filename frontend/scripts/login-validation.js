@@ -25,16 +25,17 @@ function showSuccess(input) {
 
 // Check required fields to apply classes
 function checkRequiredFields(inputArr) {
+  let check_passed = true;
   inputArr.forEach(function (input) {
     console.log(input.value);
     if (input.value.trim() === '') {
       showError(input, `${getFieldName(input)} is required.`);
-      return false;
+      check_passed = false;
     } else {
       showSuccess(input);
-      return true;
     }
   });
+  return check_passed;
 }
 
 // Check email is valid
@@ -66,27 +67,26 @@ function getFieldName(input) {
 }
 
 // Event listeners
-
-if (checkRequiredFields && validateEmail && validateLength)
-  {
-    form.addEventListener('submit', function (e) {
+form.addEventListener('submit', function (e) {
     e.preventDefault();
-    checkRequiredFields([email, password]);
-    validateEmail(email);
-    validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
 
-    axios
-      .post(`${BACKEND_URL}/login`, {
-        email: email.value,
-        password: password.value,
-      })
-      .then((res) => {
-        sessionStorage.setItem('token', res.data.token);
-        window.location.href = 'journal.html';
-      })
-      .catch((err) => {
-        console.error(err);
-        alert(err);
-      });
-    } //end if validation
-});
+    if (
+      checkRequiredFields([email, password]) &&
+      validateEmail(email) &&
+      validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH)
+    ) {
+      axios
+        .post(`${BACKEND_URL}/login`, {
+          email: email.value,
+          password: password.value,
+        })
+        .then((res) => {
+          sessionStorage.setItem('token', res.data.token);
+          window.location.href = 'journal.html';
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(err);
+        });
+    }
+  });
