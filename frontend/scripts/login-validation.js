@@ -1,5 +1,7 @@
 //Will need to check database if e-mail exists and password is correct
 
+const BACKEND_URL = 'http://localhost:5000/diarist';
+
 const MIN_PASSWORD_LENGTH = 10;
 const MAX_PASSWORD_LENGTH = 25;
 
@@ -61,4 +63,18 @@ form.addEventListener('submit', function (e) {
   checkRequiredFields([email, password]);
   validateEmail(email);
   validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
+
+  axios
+    .post(`${BACKEND_URL}/login`, {
+      email: email.value,
+      password: password.value,
+    })
+    .then((res) => {
+      sessionStorage.setItem('token', res.data.token);
+      window.location.href = 'journal.html';
+    })
+    .catch((err) => {
+      console.error(err);
+      alert(err);
+    });
 });

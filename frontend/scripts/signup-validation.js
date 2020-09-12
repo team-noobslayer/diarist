@@ -1,3 +1,5 @@
+const BACKEND_URL = 'http://localhost:5000/diarist';
+
 const MIN_PASSWORD_LENGTH = 10;
 const MAX_PASSWORD_LENGTH = 25;
 const MIN_NAME_LENGTH = 3;
@@ -83,4 +85,19 @@ form.addEventListener('submit', function (e) {
   validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
   validateLength(password2, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
   validatePasswordMatch(password, password2);
+
+  axios
+    .post(`${BACKEND_URL}/register`, {
+      email: email.value,
+      username: name.value,
+      password: password.value,
+    })
+    .then((res) => {
+      sessionStorage.setItem('token', res.data.token);
+      window.location.href = 'journal.html';
+    })
+    .catch((err) => {
+      console.error(err);
+      alert(err);
+    });
 });
