@@ -88,7 +88,7 @@ function getFieldName(input) {
 }
 
 // Event listeners, all validation checks must hold true before user is registered into DB
-if (checkRequiredFields && validateLength && validateEmail && validateLength && validateLength && validatePasswordMatch)
+if (checkRequiredFields && validateEmail && validateLength && validatePasswordMatch)
   {
     form.addEventListener('submit', function (e) {
     e.preventDefault();
