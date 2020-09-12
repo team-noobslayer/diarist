@@ -67,7 +67,7 @@ function getFieldName(input) {
 
 // Event listeners
 
-if (checkRequiredFields && validateLength && validateEmail && validateLength)
+if (checkRequiredFields && validateEmail && validateLength)
   {
     form.addEventListener('submit', function (e) {
     e.preventDefault();
