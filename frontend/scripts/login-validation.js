@@ -29,8 +29,10 @@ function checkRequiredFields(inputArr) {
     console.log(input.value);
     if (input.value.trim() === '') {
       showError(input, `${getFieldName(input)} is required.`);
+      return false;
     } else {
       showSuccess(input);
+      return true;
     }
   });
 }
@@ -40,8 +42,10 @@ function validateEmail(input) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (re.test(input.value.trim())) {
     showSuccess(input);
+    return true;
   } else {
     showError(input, "We don't recognize this e-mail.");
+    return false;
   }
 }
 
@@ -49,6 +53,10 @@ function validateEmail(input) {
 function validateLength(input, min, max) {
   if (input.value.length < min || input.value.length > max) {
     showError(input, `${getFieldName(input)} entered is incorrect.`);
+    return false;
+  }
+  else {
+    return true;
   }
 }
 
@@ -58,23 +66,27 @@ function getFieldName(input) {
 }
 
 // Event listeners
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  checkRequiredFields([email, password]);
-  validateEmail(email);
-  validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
 
-  axios
-    .post(`${BACKEND_URL}/login`, {
-      email: email.value,
-      password: password.value,
-    })
-    .then((res) => {
-      sessionStorage.setItem('token', res.data.token);
-      window.location.href = 'journal.html';
-    })
-    .catch((err) => {
-      console.error(err);
-      alert(err);
-    });
+if (checkRequiredFields && validateLength && validateEmail && validateLength)
+  {
+    form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    checkRequiredFields([email, password]);
+    validateEmail(email);
+    validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
+
+    axios
+      .post(`${BACKEND_URL}/login`, {
+        email: email.value,
+        password: password.value,
+      })
+      .then((res) => {
+        sessionStorage.setItem('token', res.data.token);
+        window.location.href = 'journal.html';
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(err);
+      });
+    } //end if validation
 });
