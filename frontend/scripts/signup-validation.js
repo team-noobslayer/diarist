@@ -27,16 +27,18 @@ function showSuccess(input) {
 
 // Check required fields to apply classes
 function checkRequiredFields(inputArr) {
+  let check_passed = true;
   inputArr.forEach(function (input) {
     console.log(input.value);
     if (input.value.trim() === '') {
       showError(input, `${getFieldName(input)} is required.`);
-      return false;
+      check_passed = false;
     } else {
       showSuccess(input);
-      return true;
+      
     }
   });
+  return check_passed;
 }
 
 // Check email is valid
@@ -88,30 +90,29 @@ function getFieldName(input) {
 }
 
 // Event listeners, all validation checks must hold true before user is registered into DB
-if (checkRequiredFields && validateEmail && validateLength && validatePasswordMatch)
-  {
-    form.addEventListener('submit', function (e) {
+form.addEventListener('submit', function (e) {
     e.preventDefault();
-    checkRequiredFields([name, email, password]);
-    validateLength(name, MIN_NAME_LENGTH, MAX_NAME_LENGTH);
-    validateEmail(email);
-    validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
-    validateLength(password2, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
-    validatePasswordMatch(password, password2);
-
-    axios
-      .post(`${BACKEND_URL}/register`, {
-        email: email.value,
-        username: name.value,
-        password: password.value,
-      })
-      .then((res) => {
-        sessionStorage.setItem('token', res.data.token);
-        window.location.href = 'journal.html';
-      })
-      .catch((err) => {
-        console.error(err);
-        alert(err);
-      });
-    } //end if validation check
+    if (
+      checkRequiredFields([name, email, password]) &&
+      validateLength(name, MIN_NAME_LENGTH, MAX_NAME_LENGTH) &&
+      validateEmail(email) &&
+      validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH) &&
+      validateLength(password2, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH) &&
+      validatePasswordMatch(password, password2)
+    ) {
+      axios
+        .post(`${BACKEND_URL}/register`, {
+          email: email.value,
+          username: name.value,
+          password: password.value,
+        })
+        .then((res) => {
+          sessionStorage.setItem('token', res.data.token);
+          window.location.href = 'journal.html';
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(err);
+        });
+    } else console.error('fail');
 });
