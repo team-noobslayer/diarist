@@ -24,21 +24,22 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model):
+    __tablename__ = 'diarist_user'
     email = db.Column(db.String(128), nullable=False, primary_key=True)
     username = db.Column(db.String(32), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     token = db.Column(db.String(256), nullable=False)
-
+    journal_entries = db.relationship('JournalEntry', backref='owner')
 
 class JournalEntry(db.Model):
+    __tablename__ = 'diarist_journal_entry'
     entry_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256))
     body = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     last_edited = db.Column(
         db.DateTime, default=datetime.now(), nullable=False)
-    author = db.Column(db.String(128), db.ForeignKey('user.email'))
-    user = db.relationship("User", backref="request")
+    author = db.Column(db.String(128), db.ForeignKey('diarist_user.email'))
 
 # Uncomment the next line to create the required tables in a new database on program execution
 # db.create_all()
