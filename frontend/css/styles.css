@@ -22,8 +22,13 @@ footer {
   color: #00aced;
   margin-top: 30%;
 }
+#brand-title {
+  font-family: 'Lobster', cursive;
+  font-size: 2em;
+}
 
-#login {
+#login,
+#create {
   margin-top: 1%;
 }
 
@@ -31,7 +36,82 @@ footer {
   padding-top: 45px;
 }
 
-/*CSS for Classes*/
+#journal-page-navbar {
+  padding: 0.1% 2%;
+}
+
+#journal-body {
+  padding-top: 100px;
+}
+
+.mood-select-button {
+  background-color: #0084b4;
+  color: white;
+  font-weight: 900;
+  padding: 16px;
+  font-size: 20px;
+  border: none;
+  width: 6em;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 10%;
+}
+
+.mood-select-button:focus {
+  outline: none;
+}
+
+.mood-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content .btn {
+  background-color: #0084b4;
+  padding: 15px;
+  font-size: 20px;
+  display: block;
+  width: 6em;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.mood-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.mood-dropdown:hover .mood-select-button {
+  background-color: #00aced;
+}
+
+.dropdown-content .btn:hover {
+  background-color: #00aced;
+}
+
+.i {
+  font-size: 40px;
+}
+
+.fa-sad-tear {
+  color: purple;
+}
+
+.fa-angry {
+  color: red;
+}
+
+.fa-grin {
+  color: yellow;
+}
+
+.fa-meh {
+  color: green;
+}
 
 .form-group.success input {
   border-color: var(--success-color);
@@ -43,7 +123,6 @@ footer {
 
 .form-group small {
   color: var(--error-color);
-
   visibility: hidden;
 }
 
@@ -55,4 +134,9 @@ footer {
   font-weight: bold;
   text-decoration: none;
   line-height: 4;
+}
+
+#username-journal {
+  font-weight: 900;
+  color: white;
 }
