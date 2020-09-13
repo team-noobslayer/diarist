@@ -65,11 +65,12 @@ class JournalEntry(db.Model):
 #   POST takes a new journal entry and adds it to database
 @app.route("/diarist", methods=['GET', 'POST'], strict_slashes=False)
 def home():
-    request_data = request.get_json()
-    if not authenticate_token(request_data['token']):
+    request_data = None if request.method == 'GET' else request.get_json()
+    token = request.headers.get('Authorization') if request.method == 'GET' else request_data.get('token')
+    if not authenticate_token(token):
         abort(401)
     if request.method == 'GET':
-        email = get_email_from_token(request_data['token'])
+        email = get_email_from_token(token)
         journal_entry_objects = JournalEntry.query.filter_by(
             author=email).all()
         journal_entries = []
@@ -89,13 +90,13 @@ def home():
             journal_entries
         )
     elif request.method == 'POST':
-        email = get_email_from_token(request_data['token'])
+        email = get_email_from_token(token)
         entry = JournalEntry(
-            body1=request_data['body1'],
-            body2=request_data['body2'],
-            body3=request_data['body3'],
-            exercise=request_data['exercise'],
-            mood=request_data['mood'],
+            body1=request_data.get('body1'),
+            body2=request_data.get('body2'),
+            body3=request_data.get('body3'),
+            exercise=request_data.get('exercise'),
+            mood=request_data.get('mood'),
             author=email
         )
         db.session.add(entry)
@@ -106,11 +107,11 @@ def home():
 @app.route("/diarist/delete/<int:entry_id>", methods=['DELETE'])
 def delete(entry_id):
     request_data = request.get_json()
-    if not authenticate_token(request_data['token']):
+    if not authenticate_token(request_data.get('token')):
         abort(401)
     else:
         entry = JournalEntry.query.get_or_404(entry_id)
-        if get_email_from_token(request_data['token']) != entry.author:
+        if get_email_from_token(request_data.get('token')) != entry.author:
             abort(401)
         db.session.delete(entry)
         db.session.commit()
@@ -120,14 +121,14 @@ def delete(entry_id):
 @app.route("/diarist/edit/<int:entry_id>", methods=['PUT'])
 def edit(entry_id):
     request_data = request.get_json()
-    if not authenticate_token(request_data['token']):
+    if not authenticate_token(request_data.get('token')):
         abort(401)
     else:
         entry = JournalEntry.query.get_or_404(entry_id)
-        if get_email_from_token(request_data['token']) != entry.author:
+        if get_email_from_token(request_data.get('token')) != entry.author:
             abort(401)
-        entry.title = request_data['title']
-        entry.body = request_data['body']
+        entry.title = request_data.get('title')
+        entry.body = request_data.get('body')
         entry.last_edited = datetime.now()
         db.session.commit()
         return request_data
@@ -138,17 +139,17 @@ def register():
     request_data = request.get_json()
     try:
         # hash password
-        pwd = request_data['password'].encode()
+        pwd = request_data.get('password').encode()
         salt = bcrypt.gensalt()
         hashed_pw = bcrypt.hashpw(pwd, salt)
 
         # generate auth token
-        token = generate_token(request_data['email'])
+        token = generate_token(request_data.get('email'))
 
         # generate user and write to database
         user = User(
-            username=request_data['username'],
-            email=request_data['email'],
+            username=request_data.get('username'),
+            email=request_data.get('email'),
             password=hashed_pw.decode(),
             token=token
         )
@@ -166,18 +167,18 @@ def register():
 @app.route("/diarist/login", methods=['POST'], strict_slashes=False)
 def login():
     request_data = request.get_json()
-    try:
-        token = authenticate_email_password(
-            request_data['email'], request_data['password'])
-        if token:
-            return jsonify({
-                "status": "success",
-                "token": token
-            })
-        else:
-            abort(401)
-    except:
-        abort(400)
+    # try:
+    token = authenticate_email_password(
+        request_data.get('email'), request_data.get('password'))
+    if token:
+        return jsonify({
+            "status": "success",
+            "token": token
+        })
+    else:
+        abort(401)
+    # except:
+    #     abort(400)
 
 
 def generate_token(email):
