@@ -76,8 +76,11 @@ def home():
         for entry in journal_entry_objects:
             journal_entries.append({
                 'id': entry.entry_id,
-                'title': entry.title,
-                'body': entry.body,
+                'body1': entry.body1,
+                'body2': entry.body2,
+                'body3': entry.body3,
+                'exercise': entry.exercise,
+                'mood': entry.mood,
                 'created_at': entry.created_at,
                 'last_edited': entry.last_edited,
                 'author': entry.author
