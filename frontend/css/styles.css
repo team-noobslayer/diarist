@@ -1,75 +1,181 @@
 :root {
-  --success-color: #2ecc71;
-  --error-color: #e74c3c;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
 }
 
 /*CSS for Elements*/
 body {
-  background-color: #c0deed;
-  font-family: 'Montserrat', sans-serif;
+    background-color: #c0deed;
+    font-family: 'Montserrat', sans-serif;
 }
 
 footer {
-  padding: 4em;
-  font-weight: bold;
+    padding: 4em;
+    font-weight: bold;
 }
 
 /*CSS for ID*/
 #app-name {
-  display: inline-block;
-  font-size: 4em;
-  font-family: 'Lobster', cursive;
-  color: #00aced;
-  margin-top: 30%;
+    display: inline-block;
+    font-size: 4em;
+    font-family: 'Lobster', cursive;
+    color: #00aced;
+    margin-top: 30%;
 }
 
-#login {
-  margin-top: 1%;
+#brand-title {
+    font-family: 'Lobster', cursive;
+    font-size: 2em;
 }
+
+#login,
+#create {
+    margin-top: 1%;
+}
+
 
 #login-text {
-  padding-top: 45px;
+    padding-top: 45px;
+}
+
+#journal-page-navbar {
+    padding: 0.1% 2%;
+}
+
+#journal-body {
+    padding-top: 100px;
+}
+
+#username-journal {
+    font-weight: 900;
+    color: white;
 }
 
 /*CSS for Classes*/
 .container-index {
-  position: relative;
-  text-align: center;
-  color: white;
+    position: relative;
+    text-align: center;
+    color: white;
 }
 
 .text-block {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: Georgia, serif;
-  font-size: larger;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Georgia, serif;
+    font-size: larger;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .form-group.success input {
-  border-color: var(--success-color);
+    border-color: var(--success-color);
 }
 
 .form-group.error input {
-  border-color: var(--error-color);
+    border-color: var(--error-color);
 }
 
 .form-group small {
-  color: var(--error-color);
-
-  visibility: hidden;
+    color: var(--error-color);
+    visibility: hidden;
 }
 
 .form-group.error small {
-  visibility: visible;
+    visibility: visible;
 }
 
 .links {
-  font-weight: bold;
-  text-decoration: none;
-  line-height: 4;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 4;
+}
+
+/*Mood classes*/
+.mood-select-button {
+    background-color: #0084b4;
+    color: white;
+    font-weight: 900;
+    padding: 16px;
+    font-size: 20px;
+    border: none;
+    width: 6em;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 10%;
+}
+
+.mood-select-button:focus {
+    outline: none;
+}
+
+.mood-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown-content .btn {
+    background-color: #0084b4;
+    padding: 15px;
+    font-size: 20px;
+    display: block;
+    width: 6em;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+.mood-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.mood-dropdown:hover .mood-select-button {
+    background-color: #00aced;
+}
+
+.dropdown-content .btn:hover {
+    background-color: #00aced;
+}
+
+.i {
+    font-size: 40px;
+}
+
+.fa-sad-tear {
+    color: purple;
+}
+
+.fa-angry {
+    color: red;
+}
+
+.fa-grin {
+    color: yellow;
+}
+
+.fa-meh {
+    color: green;
+}
+
+/*Journal entry date*/
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+/*Exercise entry CSS*/
+.custom-select {
+    background-color: #c0deed;
+    border-color: transparent;
 }
 
 /*Journal entry date*/
