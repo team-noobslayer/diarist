@@ -51,10 +51,20 @@ footer {
 }
 
 /*CSS for Classes*/
-.container-index {
-  position: relative;
-  text-align: center;
-  color: white;
+.jumbotron {
+  padding-top: 55px;
+  margin: 0;
+  background: linear-gradient(135deg,
+    rgba(0, 0, 128, 0.6),
+    rgba(0, 0, 0, 0.8)
+    ), url('../images/bg.jpg');
+  background-size: cover;
+  background-position: right;
+  height: 100vh;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px rgba(255,255,255,0.4);
 }
 
 .text-block {
