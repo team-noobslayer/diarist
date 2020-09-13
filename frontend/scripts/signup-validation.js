@@ -1,3 +1,5 @@
+const BACKEND_URL = 'http://localhost:5000/diarist';
+
 const MIN_PASSWORD_LENGTH = 10;
 const MAX_PASSWORD_LENGTH = 25;
 const MIN_NAME_LENGTH = 3;
@@ -25,14 +27,18 @@ function showSuccess(input) {
 
 // Check required fields to apply classes
 function checkRequiredFields(inputArr) {
+  let check_passed = true;
   inputArr.forEach(function (input) {
     console.log(input.value);
     if (input.value.trim() === '') {
       showError(input, `${getFieldName(input)} is required.`);
+      check_passed = false;
     } else {
       showSuccess(input);
+      
     }
   });
+  return check_passed;
 }
 
 // Check email is valid
@@ -40,8 +46,10 @@ function validateEmail(input) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (re.test(input.value.trim())) {
     showSuccess(input);
+    return true;
   } else {
     showError(input, 'Email is not valid.');
+    return false;
   }
 }
 
@@ -52,13 +60,16 @@ function validateLength(input, min, max) {
       input,
       `${getFieldName(input)} must be at least ${min} characters.`
     );
+    return false;
   } else if (input.value.length > max) {
     showError(
       input,
       `${getFieldName(input)} must be less than ${max} characters.`
     );
+    return false;
   } else {
     showSuccess(input);
+    return true;
   }
 }
 
@@ -66,6 +77,10 @@ function validateLength(input, min, max) {
 function validatePasswordMatch(input1, input2) {
   if (input1.value !== input2.value) {
     showError(input2, 'Passwords do not match.');
+    return false;
+  }
+  else {
+    return true;
   }
 }
 
@@ -74,13 +89,30 @@ function getFieldName(input) {
   return input.placeholder;
 }
 
-// Event listeners
+// Event listeners, all validation checks must hold true before user is registered into DB
 form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  checkRequiredFields([name, email, password]);
-  validateLength(name, MIN_NAME_LENGTH, MAX_NAME_LENGTH);
-  validateEmail(email);
-  validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
-  validateLength(password2, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
-  validatePasswordMatch(password, password2);
+    e.preventDefault();
+    if (
+      checkRequiredFields([name, email, password]) &&
+      validateLength(name, MIN_NAME_LENGTH, MAX_NAME_LENGTH) &&
+      validateEmail(email) &&
+      validateLength(password, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH) &&
+      validateLength(password2, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH) &&
+      validatePasswordMatch(password, password2)
+    ) {
+      axios
+        .post(`${BACKEND_URL}/register`, {
+          email: email.value,
+          username: name.value,
+          password: password.value,
+        })
+        .then((res) => {
+          sessionStorage.setItem('token', res.data.token);
+          window.location.href = 'journal.html';
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(err);
+        });
+    } else console.error('fail');
 });

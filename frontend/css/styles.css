@@ -23,12 +23,31 @@ footer {
   margin-top: 30%;
 }
 
-#login {
+#brand-title {
+  font-family: 'Lobster', cursive;
+  font-size: 2em;
+}
+
+#login,
+#create {
   margin-top: 1%;
 }
 
 #login-text {
   padding-top: 45px;
+}
+
+#journal-page-navbar {
+  padding: 0.1% 2%;
+}
+
+#journal-body {
+  padding-top: 100px;
+}
+
+#username-journal {
+  font-weight: 900;
+  color: white;
 }
 
 /*CSS for Classes*/
@@ -45,7 +64,8 @@ footer {
   transform: translate(-50%, -50%);
   font-family: Georgia, serif;
   font-size: larger;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .form-group.success input {
@@ -58,7 +78,6 @@ footer {
 
 .form-group small {
   color: var(--error-color);
-
   visibility: hidden;
 }
 
@@ -72,19 +91,92 @@ footer {
   line-height: 4;
 }
 
-/*Journal entry date*/
+.fa-sad-tear {
+  color: rgb(10, 109, 209);
+}
+
+.fa-angry {
+  color: rgb(223, 31, 31);
+}
+
+.fa-grin {
+  color: rgb(233, 250, 0);
+}
+
+.fa-meh {
+  color: rgb(4, 163, 65);
+}
+
 label {
   display: block;
   font: 1rem 'Fira Sans', sans-serif;
 }
 
-input,
-label {
-  margin: .4rem 0;
+.row {
+  margin-top: 2%;
 }
 
-/*Exercise entry CSS*/
-.custom-select {
-  background-color: #c0deed;
-  border-color: transparent;
+#journal-form {
+  padding: 2%;
+}
+
+#thought-text-area-label,
+#win-text-area-label,
+#goal-text-area-label {
+  font-family: 'Lobster', cursive;
+  font-size: 2em;
+}
+
+#thought-text-area {
+  border: 3px dashed #00aced;
+  border-left: 4px solid #00aced;
+  max-width: 100%;
+}
+
+#win-text-area {
+  border: 3px dashed #a2f7a2;
+  border-left: 4px solid #a2f7a2;
+  max-width: 100%;
+}
+#goal-text-area {
+  border: 3px dashed #cea3ff;
+  border-left: 4px solid #cea3ff;
+  max-width: 100%;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+#journal-container {
+  background-color: white;
+  border-radius: 2%;
+}
+
+#exercise-select-menu {
+  width: 50%;
+}
+
+#exercise-select-menu-label {
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#mood-label {
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 2%;
+}
+
+#submit-container {
+  text-align: center;
+  padding: 3%;
+}
+
+#exercise-container {
+  padding: 3%;
+}
+
+#mood-container {
+  padding: 3%;
 }

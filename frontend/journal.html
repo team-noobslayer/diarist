@@ -2,17 +2,34 @@
 <html lang="em">
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+            crossorigin="anonymous"
+    />
 
     <!-- CSS stylesheets-->
-    <link rel="stylesheet" href="css\styles.css">
+    <link rel="stylesheet" href="css\styles.css"/>
+    <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+            crossorigin="anonymous"
+    />
 
-    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Lobster&family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Lobster&family=Montserrat&family=Roboto&display=swap"
+            rel="stylesheet"
+    />
     <title>Diarist | Your Journal</title>
     <style>
         textarea {
@@ -30,7 +47,42 @@
     </style>
 </head>
 
-<body>
+<body id="journal-body">
+<!-- Navbar -->
+<nav
+        class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
+        id="journal-page-navbar"
+>
+    <a class="navbar-brand" id="brand-title" href="">Diarist</a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarToggler"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <class class="collapse navbar-collapse" id="navbarToggler">
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" id="username-journal"href="">Name</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href="signup.html">Signup</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href="journal.html">Journal</a>
+            </li>
+        </ul>
+    </class>
+    </div>
+</nav>
+
 
 <!-- Logo -->
 <header id="logo-header mx-auto">
@@ -42,15 +94,25 @@
         </div>
 </header>
 
-<div style="margin-left: 100px">
-    <label for="start">Entry date:</label>
-
-    <input type="date" id="start" name="journal-entry-date"
-           value="2020-09-12"
-           min="2020-01-01" max="2020-12-31">
-</div>
+<!-- Emotion Bar-->
+<br>
+<aside>
+    <div class="container" style="margin-left: 90px">
+        <div class="mood-dropdown">
+            <button class="mood-select-button">Mood</button>
+            <div class="dropdown-content">
+                <button class="btn"><i class="fas fa-angry fa-2x"></i></button>
+                <button class="btn"><i class="fas fa-grin fa-2x"></i></button>
+                <button class="btn"><i class="fas fa-meh fa-2x"></i></button>
+                <button class="btn"><i class="fas fa-sad-tear fa-2x"></i></button>
+            </div>
+        </div>
+    </div>
+</aside>
 
 <form>
+    <br>
+  
     <div style="margin-left: 100px">
         <h6>Enter your thoughts here...</h6>
         <textarea></textarea>
