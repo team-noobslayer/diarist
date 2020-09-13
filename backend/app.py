@@ -4,41 +4,55 @@ from dotenv import load_dotenv
 from cryptography.fernet import Fernet
 from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import bcrypt
 import os
+
+# Uncomment the following code block to instruct the program to generate a sqlite database. 
+#   Setting will be stored in .env and database will be stored in db.sqlite3
+#
+# with open('.env', 'a') as file:
+#     file.write('\nDATABASE_URL = "sqlite:///db.sqlite3"')
+
+# Uncomment the following code block to generate a secret for encryption, to be stored in .env
+#   NOTE: Only do this once! Generating a new secret may render previously encrypted
+#         data unreadable.
+#
+# with open('.env', 'a') as file:
+#     file.write(f'\nSECRET = "{ Fernet.generate_key().decode() }"')
+
 load_dotenv()
-
-token_timeout = 24  # timeout period, in hours, for authentication tokens
-
-token_crypto_secret = os.environ.get('SECRET').encode()
+token_crypto_secret = os.environ.get('SECRET')
 crypto = Fernet(token_crypto_secret)
+token_timeout = 24  # timeout period, in hours, for authentication tokens
 
 app = Flask(__name__)
 
 # Optional, silences deprecation warning
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
 
+CORS(app)
 
 class User(db.Model):
+    __tablename__ = 'diarist_user'
     email = db.Column(db.String(128), nullable=False, primary_key=True)
     username = db.Column(db.String(32), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     token = db.Column(db.String(256), nullable=False)
-
+    journal_entries = db.relationship('JournalEntry', backref='owner')
 
 class JournalEntry(db.Model):
+    __tablename__ = 'diarist_journal_entry'
     entry_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256))
     body = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     last_edited = db.Column(
         db.DateTime, default=datetime.now(), nullable=False)
-    author = db.Column(db.String(128), db.ForeignKey('user.email'))
-    user = db.relationship("User", backref="request")
+    author = db.Column(db.String(128), db.ForeignKey('diarist_user.email'))
 
 # Uncomment the next line to create the required tables in a new database on program execution
 # db.create_all()
