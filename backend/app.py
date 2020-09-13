@@ -65,11 +65,12 @@ class JournalEntry(db.Model):
 #   POST takes a new journal entry and adds it to database
 @app.route("/diarist", methods=['GET', 'POST'], strict_slashes=False)
 def home():
-    request_data = request.get_json()
-    if not authenticate_token(request_data['token']):
+    request_data = None if request.method == 'GET' else request.get_json()
+    token = request.headers.get('Authorization') if request.method == 'GET' else request_data.get('token')
+    if not authenticate_token(token):
         abort(401)
     if request.method == 'GET':
-        email = get_email_from_token(request_data['token'])
+        email = get_email_from_token(token)
         journal_entry_objects = JournalEntry.query.filter_by(
             author=email).all()
         journal_entries = []
@@ -89,7 +90,7 @@ def home():
             journal_entries
         )
     elif request.method == 'POST':
-        email = get_email_from_token(request_data['token'])
+        email = get_email_from_token(token)
         entry = JournalEntry(
             body1=request_data.get('body1'),
             body2=request_data.get('body2'),
@@ -167,15 +168,15 @@ def register():
 def login():
     request_data = request.get_json()
     # try:
-        token = authenticate_email_password(
+    token = authenticate_email_password(
         request_data.get('email'), request_data.get('password'))
-        if token:
-            return jsonify({
-                "status": "success",
-                "token": token
-            })
-        else:
-            abort(401)
+    if token:
+        return jsonify({
+            "status": "success",
+            "token": token
+        })
+    else:
+        abort(401)
     # except:
     #     abort(400)
 
