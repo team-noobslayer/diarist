@@ -5,6 +5,11 @@ if (!sessionStorage.getItem('token')) {
     window.location.replace("index.html");
 }
 
+function logout() {
+    sessionStorage.removeItem('token');
+    window.location.href = "index.html";
+}
+
 function getMoods(entry) {
     let output = [];
     moodString = entry.mood.toString(2);
@@ -20,7 +25,8 @@ function getMoods(entry) {
 var app = new Vue({
     el: '#app',
     data: {
-      journalEntries: []
+        username: null,
+        journalEntries: []
     },
     methods: {
         getMoods: getMoods
@@ -34,8 +40,9 @@ var app = new Vue({
             }
         })
         .then((res) => {
-            this.journalEntries = res.data;
+            this.journalEntries = res.data.journal_entries;
+            this.username = res.data.username;
         })
-        .error((err) => console.error(err))
+        .error((err) => console.error(err));
     }
   })

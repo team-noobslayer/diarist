@@ -14,6 +14,11 @@ if (!sessionStorage.getItem('token')) {
     window.location.replace("index.html");
 }
 
+function logout() {
+    sessionStorage.removeItem('token');
+    window.location.href = "index.html";
+}
+
 function getMoodValues(moods) {
     let output = 0
     moods.forEach((mood) => {
