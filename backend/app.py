@@ -47,8 +47,11 @@ class User(db.Model):
 class JournalEntry(db.Model):
     __tablename__ = 'diarist_journal_entry'
     entry_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(256))
-    body = db.Column(db.Text, nullable=False)
+    body1 = db.Column(db.Text)
+    body2 = db.Column(db.Text)
+    body3 = db.Column(db.Text)
+    exercise = db.Column(db.Boolean)
+    mood = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     last_edited = db.Column(
         db.DateTime, default=datetime.now(), nullable=False)
@@ -85,8 +88,11 @@ def home():
     elif request.method == 'POST':
         email = get_email_from_token(request_data['token'])
         entry = JournalEntry(
-            title=request_data['title'],
-            body=request_data['body'],
+            body1=request_data['body1'],
+            body2=request_data['body2'],
+            body3=request_data['body3'],
+            exercise=request_data['exercise'],
+            mood=request_data['mood'],
             author=email
         )
         db.session.add(entry)

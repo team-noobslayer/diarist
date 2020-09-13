@@ -1,61 +1,60 @@
 :root {
-    --success-color: #2ecc71;
-    --error-color: #e74c3c;
+  --success-color: #2ecc71;
+  --error-color: #e74c3c;
 }
 
 /*CSS for Elements*/
 body {
-    background-color: #c0deed;
-    font-family: 'Montserrat', sans-serif;
+  background-color: #c0deed;
+  font-family: 'Montserrat', sans-serif;
 }
 
 footer {
-    padding: 4em;
-    font-weight: bold;
+  padding: 4em;
+  font-weight: bold;
 }
 
 /*CSS for ID*/
 #app-name {
-    display: inline-block;
-    font-size: 4em;
-    font-family: 'Lobster', cursive;
-    color: #00aced;
-    margin-top: 30%;
+  display: inline-block;
+  font-size: 4em;
+  font-family: 'Lobster', cursive;
+  color: #00aced;
+  margin-top: 30%;
 }
 
 #brand-title {
-    font-family: 'Lobster', cursive;
-    font-size: 2em;
+  font-family: 'Lobster', cursive;
+  font-size: 2em;
 }
 
 #login,
 #create {
-    margin-top: 1%;
+  margin-top: 1%;
 }
 
-
 #login-text {
-    padding-top: 45px;
+  padding-top: 45px;
 }
 
 #journal-page-navbar {
-    padding: 0.1% 2%;
+  padding: 0.1% 2%;
 }
 
 #journal-body {
-    padding-top: 100px;
+  padding-top: 100px;
 }
 
 #username-journal {
-    font-weight: 900;
-    color: white;
+  font-weight: 900;
+  color: white;
 }
 
 /*CSS for Classes*/
 .container-index {
-    position: relative;
-    text-align: center;
-    color: white;
+  position: relative;
+  text-align: center;
+  color: white;
 }
 
 .text-block {
@@ -69,115 +68,118 @@ footer {
 }
 
 .form-group.success input {
-    border-color: var(--success-color);
+  border-color: var(--success-color);
 }
 
 .form-group.error input {
-    border-color: var(--error-color);
+  border-color: var(--error-color);
 }
 
 .form-group small {
-    color: var(--error-color);
-    visibility: hidden;
+  color: var(--error-color);
+  visibility: hidden;
 }
 
 .form-group.error small {
-    visibility: visible;
+  visibility: visible;
 }
 
 .links {
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 4;
-}
-
-/*Mood classes*/
-.mood-select-button {
-    background-color: #0084b4;
-    color: white;
-    font-weight: 900;
-    padding: 16px;
-    font-size: 20px;
-    border: none;
-    width: 6em;
-    font-family: 'Montserrat', sans-serif;
-    border-radius: 10%;
-}
-
-.mood-select-button:focus {
-    outline: none;
-}
-
-.mood-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    z-index: 1;
-}
-
-.dropdown-content .btn {
-    background-color: #0084b4;
-    padding: 15px;
-    font-size: 20px;
-    display: block;
-    width: 6em;
-    border-radius: 10%;
-    cursor: pointer;
-}
-
-.mood-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.mood-dropdown:hover .mood-select-button {
-    background-color: #00aced;
-}
-
-.dropdown-content .btn:hover {
-    background-color: #00aced;
-}
-
-.i {
-    font-size: 40px;
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 4;
 }
 
 .fa-sad-tear {
-    color: purple;
+  color: rgb(10, 109, 209);
 }
 
 .fa-angry {
-    color: red;
+  color: rgb(223, 31, 31);
 }
 
 .fa-grin {
-    color: yellow;
+  color: rgb(233, 250, 0);
 }
 
 .fa-meh {
-    color: green;
+  color: rgb(4, 163, 65);
 }
 
-/*Journal entry date*/
 label {
-    display: block;
-    font: 1rem 'Fira Sans', sans-serif;
+  display: block;
+  font: 1rem 'Fira Sans', sans-serif;
 }
 
-input,
-label {
-    margin: .4rem 0;
+.row {
+  margin-top: 2%;
 }
 
-/*Exercise entry CSS*/
-.custom-select {
-    background-color: #c0deed;
-    border-color: transparent;
+#journal-form {
+  padding: 2%;
 }
 
+#thought-text-area-label,
+#win-text-area-label,
+#goal-text-area-label {
+  font-family: 'Lobster', cursive;
+  font-size: 2em;
+}
+
+#thought-text-area {
+  border: 3px dashed #00aced;
+  border-left: 4px solid #00aced;
+  max-width: 100%;
+}
+
+#win-text-area {
+  border: 3px dashed #a2f7a2;
+  border-left: 4px solid #a2f7a2;
+  max-width: 100%;
+}
+#goal-text-area {
+  border: 3px dashed #cea3ff;
+  border-left: 4px solid #cea3ff;
+  max-width: 100%;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+#journal-container {
+  background-color: white;
+  border-radius: 2%;
+}
+
+#exercise-select-menu {
+  width: 50%;
+}
+
+#exercise-select-menu-label {
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#mood-label {
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 2%;
+}
+
+
+#submit-container {
+  text-align: center;
+  padding: 3%;
+}
+
+#exercise-container {
+  padding: 3%;
+}
+
+#mood-container {
+  padding: 3%;
+}
 
 /* Add a card effect for articles */
 .card {
@@ -189,15 +191,4 @@ label {
 label {
   display: block;
   font: 1rem 'Fira Sans', sans-serif;
-}
-
-input,
-label {
-  margin: .4rem 0;
-}
-
-/*Exercise entry CSS*/
-.custom-select {
-  background-color: #c0deed;
-  border-color: transparent;
 }
