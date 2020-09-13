@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="em">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+    <!-- CSS stylesheets-->
+    <link rel="stylesheet" href="css\styles.css" />
+
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Lobster&family=Montserrat&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <title>Diarist | Your Journal</title>
+  </head>
+
+  <body id="journal-body">
+    <!-- Navbar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
+      id="journal-page-navbar"
+    >
+      <a class="navbar-brand" id="brand-title" href="">Diarist</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarToggler"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <class class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="login.html">Account</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="signup.html">Logout</a>
+          </li>
+        </ul>
+      </class>
+    </nav>
+
+    <div class="container" id="journal-container">
+      <form id="journal-form">
+        <div class="journal-form-group">
+          <label for="thought-text-area" id="thought-text-area-label"
+            >Enter your thoughts...</label
+          >
+          <textarea
+            id="thought-text-area"
+            name="thought-text-area"
+            row="500"
+            cols="250"
+            form="journal-form"
+          ></textarea>
+        </div>
+
+        <div class="journal-form-group">
+          <label for="win-text-area" id="win-text-area-label"
+            >Enter your wins from today...</label
+          >
+          <textarea
+            id="win-text-area"
+            name="win-text-area"
+            row="500"
+            cols="250"
+            form="journal-form"
+          ></textarea>
+        </div>
+
+        <div class="journal-form-group">
+          <label for="goal-text-area" id="goal-text-area-label"
+            >Enter your goals for tomorrow...</label
+          >
+          <textarea
+            id="goal-text-area"
+            name="goal-text-area"
+            row="500"
+            cols="250"
+            form="journal-form"
+          ></textarea>
+        </div>
+
+        <div class="container" id="submit-mood-exercise-container">
+          <div class="row">
+            <div class="container col-lg-4 col-md-12" id="exercise-container">
+              <div class="journal-form-group">
+                <label
+                  for="exercise-select-menu"
+                  form="journal-form"
+                  id="exercise-select-menu-label"
+                  >Did you exercise today?</label
+                >
+                <select
+                  class="form-control"
+                  id="exercise-select-menu"
+                  form="journal-form"
+                >
+                  <option value="1">Yes</option>
+                  <option value="2">No</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="container col-lg-4 col-md-12" id="mood-container">
+              <div id="mood-label">Mood today?</div>
+              <div class="journal-form-group">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="mood-angry"
+                    value="0"
+                  />
+                  <label class="form-check-label" for="mood-angry">
+                    <i class="fas fa-angry fa-2x"></i>
+                  </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="mood-meh"
+                    value="1"
+                  />
+                  <label class="form-check-label" for="mood-meh">
+                    <i class="fas fa-meh fa-2x"></i>
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="mood-grin"
+                    value="2"
+                  />
+                  <label class="form-check-label" for="mood-grin"
+                    ><i class="fas fa-grin fa-2x"></i
+                  ></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="mood-sad-tear"
+                    value="3"
+                  />
+                  <label class="form-check-label" for="mood-sad-tear"
+                    ><i class="fas fa-sad-tear fa-2x"></i
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="container col-lg-4 col-md-12" id="submit-container">
+              <div class="journal-form-group">
+                <button
+                  class="btn btn-primary btn-block btn-lg"
+                  type="submit"
+                  id="journal-button"
+                  form="journal-form"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
