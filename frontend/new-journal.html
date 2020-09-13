@@ -119,7 +119,7 @@
                   form="journal-form"
                 >
                   <option value="1">Yes</option>
-                  <option value="2">No</option>
+                  <option value="0">No</option>
                 </select>
               </div>
             </div>
@@ -132,7 +132,7 @@
                     class="form-check-input"
                     type="checkbox"
                     id="mood-angry"
-                    value="0"
+                    value="1"
                   />
                   <label class="form-check-label" for="mood-angry">
                     <i class="fas fa-angry fa-2x"></i>
@@ -144,7 +144,7 @@
                     class="form-check-input"
                     type="checkbox"
                     id="mood-meh"
-                    value="1"
+                    value="2"
                   />
                   <label class="form-check-label" for="mood-meh">
                     <i class="fas fa-meh fa-2x"></i>
@@ -155,7 +155,7 @@
                     class="form-check-input"
                     type="checkbox"
                     id="mood-grin"
-                    value="2"
+                    value="4"
                   />
                   <label class="form-check-label" for="mood-grin"
                     ><i class="fas fa-grin fa-2x"></i
@@ -166,7 +166,7 @@
                     class="form-check-input"
                     type="checkbox"
                     id="mood-sad-tear"
-                    value="3"
+                    value="8"
                   />
                   <label class="form-check-label" for="mood-sad-tear"
                     ><i class="fas fa-sad-tear fa-2x"></i
@@ -193,6 +193,8 @@
     </div>
 
     <!-- Optional JavaScript -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="scripts/new-journal.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
