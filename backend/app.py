@@ -55,7 +55,7 @@ class JournalEntry(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     last_edited = db.Column(
         db.DateTime, default=datetime.now(), nullable=False)
-    author = db.Column(db.String(128), db.ForeignKey('diarist_user.email'))
+    author = db.Column(db.String(128), db.ForeignKey('diarist_user.email'), nullable=False)
 
 # Uncomment the next line to create the required tables in a new database on program execution
 # db.create_all()
@@ -74,7 +74,10 @@ def home():
         journal_entry_objects = JournalEntry.query.filter_by(
             author=email).all()
         journal_entries = []
+        user = None
         for entry in journal_entry_objects:
+            if not user:
+                user = entry.owner
             journal_entries.append({
                 'id': entry.entry_id,
                 'body1': entry.body1,
@@ -86,9 +89,11 @@ def home():
                 'last_edited': entry.last_edited,
                 'author': entry.author
             })
-        return jsonify(
-            journal_entries
-        )
+        username = user.username if user else None
+        return jsonify({
+            'username': username,
+            'journal_entries': journal_entries
+        })
     elif request.method == 'POST':
         email = get_email_from_token(token)
         entry = JournalEntry(
