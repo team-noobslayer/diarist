@@ -58,14 +58,13 @@ footer {
 }
 
 .text-block {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: Georgia, serif;
-  font-size: larger;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Lobster', cursive;
+    font-size: larger;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .form-group.success input {
@@ -168,6 +167,7 @@ textarea:focus {
   margin-bottom: 2%;
 }
 
+
 #submit-container {
   text-align: center;
   padding: 3%;
@@ -179,4 +179,16 @@ textarea:focus {
 
 #mood-container {
   padding: 3%;
+}
+
+/* Add a card effect for articles */
+.card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+
+/*Journal entry date*/
+label {
+  display: block;
+  font: 1rem 'Fira Sans', sans-serif;
 }
