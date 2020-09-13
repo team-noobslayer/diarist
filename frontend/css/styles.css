@@ -63,7 +63,7 @@ footer {
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: Georgia, serif;
+    font-family: 'Lobster', cursive;
     font-size: larger;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
@@ -177,6 +177,13 @@ label {
     background-color: #c0deed;
     border-color: transparent;
 }
+
+
+/* Add a card effect for articles */
+.card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
 
 /*Journal entry date*/
 label {
