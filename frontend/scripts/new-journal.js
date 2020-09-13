@@ -10,6 +10,10 @@ const moodMeh = document.getElementById('mood-meh');
 const moodGrin = document.getElementById('mood-grin');
 const moodSadTear = document.getElementById('mood-sad-tear');
 
+if (!sessionStorage.getItem('token')) {
+    window.location.replace("index.html");
+}
+
 function getMoodValues(moods) {
     let output = 0
     moods.forEach((mood) => {

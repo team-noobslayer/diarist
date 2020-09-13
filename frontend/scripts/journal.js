@@ -1,5 +1,9 @@
-const BACKEND_URL = 'http://localhost:5000/diarist'
-const NUMBER_OF_MOODS = 4
+const BACKEND_URL = 'http://localhost:5000/diarist';
+const NUMBER_OF_MOODS = 4;
+
+if (!sessionStorage.getItem('token')) {
+    window.location.replace("index.html");
+}
 
 function getMoods(entry) {
     let output = [];
